@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codejoys.company.dao.SalariesDao">
+    <select id="getByName" resultType="salaries">
+        SELECT
+            s.*
+        FROM employees e
+        INNER JOIN salaries s
+        ON e.emp_no = s.emp_no
+        WHERE first_name = #{firstName} AND last_name = #{lastName}
+    </select>
+</mapper>

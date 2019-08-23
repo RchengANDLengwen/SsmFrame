@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="db.properties">
+
+    </properties>
+    
+    <settings>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+<!--        <typeAlias type="io.gitee.hchaojie.entity.Daily" alias="daily" />-->
+
+        <!-- 扫描一个包下面的所有pojo，配置相应的别名 -->
+        <package name="io.gitee.hchaojie.entity"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+
+            <!-- 配置数据库连接池 -->
+            <dataSource type="io.gitee.hchaojie.db.DruidDataSourceFactory">
+                <property name="driverClassName" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+<!--        <mapper resource="DailyMapper.xml"/>-->
+<!--        <mapper resource="AddressMapper.xml"/>-->
+
+        <package name="io.gitee.hchaojie.mapper"/>
+    </mappers>
+</configuration>

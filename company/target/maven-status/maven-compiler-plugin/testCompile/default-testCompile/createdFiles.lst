@@ -1,0 +1,6 @@
+com\codejoys\company\BaseTest.class
+com\codejoys\company\TestDepartmentsDao.class
+com\codejoys\company\TestEmployeesMapper.class
+com\codejoys\company\TestSalariesDao.class
+com\codejoys\company\TestDepartmentsMapper.class
+com\codejoys\company\TestEmployeesDao.class

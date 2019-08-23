@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace必须和对应的mapper接口的 全限定名 一致 -->
+<mapper namespace="io.gitee.hchaojie.mapper.DailyMapper">
+    <!-- id: 和接口里面调用的方法名一致 -->
+    <!-- resultType: 和接口里面方法的返回值一致 -->
+    <select id="findById" resultType="daily">
+        select id, uid, summary digest, content from daily where id = #{id}
+    </select>
+
+    <select id="findList" resultType="daily">
+        select * from daily where digest like #{digest} order by ${field}
+    </select>
+
+<!--    <insert id="insert" useGeneratedKeys="true" keyProperty="id">-->
+    <insert id="insert">
+        <selectKey resultType="long" keyColumn="id" keyProperty="id" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+
+        insert into daily (id, uid, digest, content, updated_by, views, stars, favorites, status)
+        values(#{id}, #{uid}, #{digest}, #{content}, #{updatedBy},
+        #{views}, #{stars}, #{favorites}, #{status});
+    </insert>
+
+    <delete id="deleteById">
+        delete from daily where id = #{value}
+    </delete>
+
+    <update id="update">
+        update daily
+        <set>
+            <if test="digest != null and digest != ''">
+                summary = #{digest},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="codeUrl != null and codeUrl != ''">
+                code_url = #{codeUrl}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+<!--    <update id="update">-->
+<!--        update daily set digest = #{digest}-->
+<!--    </update>-->
+
+    <select id="findByCreatedAndUserId" resultType="daily">
+        select * from daily where created = #{created} and uid = #{user.id}
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from daily
+    </select>
+
+<!--    <select id="findByDaily" resultType="daily">-->
+<!--        select * from daily where-->
+<!--            1 = 1-->
+<!--            <if test="digest != null and digest != ''">-->
+<!--                and summary like #{digest}-->
+<!--            </if>-->
+
+<!--            <if test="content != null and content != ''">-->
+<!--                and content like #{content}-->
+<!--            </if>-->
+
+<!--            <if test="created != null">-->
+<!--                and created = #{created}-->
+<!--            </if>-->
+<!--    </select>-->
+
+    <select id="findByDaily" resultType="daily">
+        select * from daily
+        <where>
+            <if test="digest != null and digest != ''">
+                and summary like #{digest}
+            </if>
+
+            <if test="content != null and content != ''">
+                and content like #{content}
+            </if>
+
+            <if test="created != null">
+                and created = #{created}
+            </if>
+        </where>
+    </select>
+
+<!--    <select id="findByIds" resultType="daily">-->
+<!--        select * from daily where id in-->
+<!--        <foreach collection="list" open="(" close=")" separator="," item="id">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </select>-->
+
+    <select id="findByIds" resultType="daily">
+        select * from daily where id in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

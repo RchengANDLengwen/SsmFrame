@@ -1,0 +1,3 @@
+findAll:select id, summary from daily:com.codejoys.entity.Daily
+deleteById:delete from daily where id = #{id}:
+findById:select * from daily where id = 13:com.codejoys.entity.Daily
