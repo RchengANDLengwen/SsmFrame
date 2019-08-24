@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>创建或修改文章</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+  <form id="post_form" class="layui-form" action="" lay-filter="post_form" style="padding:20px;">
+    <div class="layui-form-item">
+      <label class="layui-form-label">文章标题</label>
+      <div class="layui-input-inline">
+        <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">文章内容</label>
+      <div class="layui-input-inline" style="width:600px;">
+          <textarea id="content" style="display: none;"></textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">分类</label>
+      <div class="layui-input-inline">
+        <select name="category" lay-verify="required">
+          <option value="">请选择分类</option>
+          <option value="1">美食</option>
+          <option value="2">新闻</option>
+          <option value="3">八卦</option>
+          <option value="4">体育</option>
+          <option value="5">音乐</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit="" lay-filter="btn-submit">立即提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      </div>
+    </div>
+  </form>
+
+  <script src="../layui/layui.js"></script>  
+  <script>
+  layui.use(['form', 'layedit'], function(){
+    var $ = layui.$, form = layui.form;
+
+    var layedit = layui.layedit;
+    var editorIndex = layedit.build('content'); //建立编辑器
+    
+    //监听提交
+    form.on('submit(post_form)', function(data){
+      var field = data.field; //获取提交的字段
+      layer.alert(JSON.stringify(field), {
+        title: '最终的提交信息'
+      })
+      return false;
+
+      //提交 Ajax 成功后，关闭当前弹层并重载表格
+      //$.ajax({});
+    });
+
+    //自定义验证规则
+    form.verify({
+      title: function(value) {
+        if(value.length < 5) {
+          return '标题至少5个字符';
+        }
+      },
+      content: function(value) {
+        layedit.sync(editorIndex);
+      }
+    });
+    
+    //表单初始赋值
+    form.val('post_form', {
+      "category": "1"
+    })
+  })
+  </script>
+</body>
+</html>

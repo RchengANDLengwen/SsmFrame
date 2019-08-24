@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>日报后台</title>
+  <link rel="stylesheet" href="layui/css/layui.css">
+  <style>
+    .iframe {
+      position:absolute;
+      top: 0;
+      left:0;
+      right:0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      border:0;
+    }
+  </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">后台管理系统</div>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://wx2.sinaimg.cn/mw690/5db11ff4gy1flxmew7edlj203d03wt8n.jpg" class="layui-nav-img">
+          王祖贤
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="">退出登陆</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧菜单 -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="nav-menu">
+        <li class="layui-nav-item layui-this"><a href="javascript:;" lay-href="pages/daily.html">日报管理</a></li>
+        <li class="layui-nav-item"><a href="javascript:;" lay-href="pages/keywords.html">关键字管理</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body" style="left: 210px; right:10px; top: 70px; bottom: 54px;">
+    <!-- 内容主体区域 -->
+    <div >
+      <iframe id="iframe" src="pages/daily.html" class="iframe"></iframe>
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    &copy; hchaojie.cn
+  </div>
+</div>
+<script src="layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+
+  element.on('nav(nav-menu)', function(data) {
+    var href = layui.$(data).attr('lay-href');
+
+    layui.$('#iframe').attr('src', href);
+  });
+});
+</script>
+</body>
+</html>

@@ -33,6 +33,6 @@ public class Generator {
         //输出警告信息
         for (String warning : warnings) {
             System.out.println(warning);
-        }
+            }
     }
 }
